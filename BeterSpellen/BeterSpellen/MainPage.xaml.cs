@@ -23,9 +23,19 @@ namespace BeterSpellen
         {
             base.OnAppearing();
 
-            listView.ItemsSource = await App.Database.GetNotesAsync();
+            listView.ItemsSource = await App.Database.GetVragenAsync();
         }
 
-        
+        async void OnListViewItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (e.SelectedItem != null)
+            {
+                await Navigation.PushAsync(new MainPage
+                {
+                    BindingContext = e.SelectedItem as Vraag
+                });
+            }
+        }
+
     }
 }
