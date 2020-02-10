@@ -8,7 +8,7 @@ namespace BeterSpellen.Models
     public class Vraag
     {
         [PrimaryKey, AutoIncrement]
-        public int VraagId { get; set; }
+        public int VraagID { get; set; }
         public string DagVraag { get; set; }
         public string Antwoord1 { get; set; }
         public string Antwoord2 { get; set; }
