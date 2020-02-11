@@ -27,7 +27,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Label x:Name="GoedOfFout"/>
+        <Label x:Name="GoedOfFout" Text="Hallo"/>
     </StackLayout>
 
 </ContentPage>
