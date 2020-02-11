@@ -7,26 +7,16 @@
              x:Class="BeterSpellen.MainPage">
 
     <StackLayout>
+        <Label x:Name="VraagLbl" Text=""/>
         <!-- Place new controls here -->
         <ListView x:Name="listView"
               Margin="20"
               ItemSelected="OnListViewItemSelected"
               HasUnevenRows="True">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <StackLayout>
-
-                            <Label x:Name="Antwoord1" Text="{Binding Antwoord1}"/>
-                            <Label x:Name="Antwoord2" Text="{Binding Antwoord2}"/>
-                            <Label x:Name="Antwoord3" Text="{Binding Antwoord3}"/>
-                            <Label x:Name="Antwoord4" Text="{Binding Antwoord4}"/>
-
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
         </ListView>
+        
+
+
         <Label x:Name="GoedOfFout" Text="Hallo"/>
     </StackLayout>
 

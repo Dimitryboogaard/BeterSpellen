@@ -16,6 +16,7 @@ namespace BeterSpellen
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
+        public static Vraag VraagVanDeDag;
         public MainPage()
         {
             InitializeComponent();
@@ -31,7 +32,7 @@ namespace BeterSpellen
                 SeedDatabase();
             }
 
-            if (!App.Database.GetNotesAsync().Result.Any())
+            if (!App.Database.GetVragenAsync().Result.Any())
             {
                 SeedDatabase();
 
@@ -39,25 +40,40 @@ namespace BeterSpellen
 
 
 
+            
 
-            listView.ItemsSource = await App.Database.GetNotesAsync();
-            var vraag = await App.Database.GetNotesAsync();
+            var vragen = App.Database.GetVragenAsync();
+
+            VraagVanDeDag = await App.Database.GetVragenAsync(1);
+            List<Vraag> list = await App.Database.GetVragenAsync();
+
+            List<string> Antwoorden = new List<string>();
+            foreach (var antwoorden in list.Where(x => x.VraagID == VraagVanDeDag.VraagID))
+            {
+                Antwoorden.Add(antwoorden.Antwoord1);
+                Antwoorden.Add(antwoorden.Antwoord2);
+                Antwoorden.Add(antwoorden.Antwoord3);
+                Antwoorden.Add(antwoorden.Antwoord4);
+            }
+            listView.ItemsSource = Antwoorden;
+            VraagLbl.Text = VraagVanDeDag.DagVraag;
 
         }
 
         async void OnListViewItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            Vraag vraag = (Vraag)e.SelectedItem;
 
-            if (e.SelectedItemIndex == vraag.GoedeAntwoord)
+            var vraag = e.SelectedItem;
+            if (e.SelectedItemIndex == VraagVanDeDag.GoedeAntwoord)
             {
-                GoedOfFout.Text = Convert.ToString(vraag.GoedeAntwoord);
+                GoedOfFout.Text = "Goed";
             }
 
             else
             {
-                GoedOfFout.Text = Convert.ToString(vraag.GoedeAntwoord); 
+                GoedOfFout.Text = "Fout"; 
             }
+
         }
 
 
