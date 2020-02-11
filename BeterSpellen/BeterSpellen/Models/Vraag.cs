@@ -1,21 +1,17 @@
 ﻿using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SQLiteNetExtensions.Attributes;
 
 namespace BeterSpellen.Models
 {
-    public class Vraag
+   public class VraagModel
     {
         [PrimaryKey, AutoIncrement]
-        public int VraagID { get; set; }
-        public string DagVraag { get; set; }
-        public string Antwoord1 { get; set; }
-        public string Antwoord2 { get; set; }
-        public string Antwoord3 { get; set; }
-        public string Antwoord4 { get; set; }
-        public int GoedeAntwoord { get; set; }
+        public int Id { get; set; }
+        [ForeignKey(typeof(DagModel))]
+        public int DagId { get; set; }
         
+        public virtual DagModel Dag { get; set; }
+        [MaxLength(255)]
+        public string Vraag { get; set; }
     }
-
 }

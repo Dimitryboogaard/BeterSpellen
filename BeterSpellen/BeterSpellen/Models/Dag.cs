@@ -5,10 +5,10 @@ using System.Text;
 
 namespace BeterSpellen.Models
 {
-    class dagen
+    public class DagModel
     {
         [PrimaryKey, AutoIncrement]
-        public int dag_id { get; set; }
+        public int Id { get; set; }
         public DateTime datum { get; set; }
     }
 }
