@@ -2,6 +2,7 @@
 using SQLite;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,7 +36,14 @@ namespace BeterSpellen.Data
                             .FirstOrDefaultAsync();
         }
 
-        public Task<int> SaveVragenAsync(Vraag vraag)
+        internal bool DatabaseExists()
+        {
+            bool exists = File.Exists(Constants.DatabasePath);
+            return exists;
+        }
+
+
+        public Task<int> SaveNoteAsync(Vraag vraag)
         {
             if (vraag.VraagID != 0)
             {
@@ -50,6 +58,11 @@ namespace BeterSpellen.Data
         public Task<int> DeleteVragenAsync(Vraag vraag)
         {
             return _database.DeleteAsync(vraag);
+        }
+
+        public Task<int> SaveVraagAsync(Vraag vraag)
+        {
+            return _database.InsertAsync(vraag);
         }
     }
 }
