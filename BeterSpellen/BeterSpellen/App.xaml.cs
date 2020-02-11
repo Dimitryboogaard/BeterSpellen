@@ -1,4 +1,5 @@
 ﻿using BeterSpellen.Data;
+using BeterSpellen.Models;
 using SQLite;
 using System;
 using System.IO;
@@ -9,7 +10,7 @@ namespace BeterSpellen
 {
     public partial class App : Application
     {
-        static BeterSpellenDatabase database;
+        private static BeterSpellenDatabase database;
 
         public static BeterSpellenDatabase Database
         {
@@ -17,7 +18,7 @@ namespace BeterSpellen
             {
                 if (database == null)
                 {
-                    database = new BeterSpellenDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Vragen.db3"));
+                    database = new BeterSpellenDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Constants.databaseName));
                 }
                 return database;
             }
