@@ -22,14 +22,57 @@ namespace BeterSpellen.Data
             //_database.InsertAsync(vraag1);
             //_database.InsertAsync(vraag2);
             //_database.InsertAsync(vraag3);
-            var dag = new Dag { dag_id = 1, datum = DateTime.UtcNow };
-            var vraag = new vragen { dag_id = dag.dag_id, vraag_id = 1, vraag = "De auto maakt een gevaarlijke..." };
-            var opties = new Optie { vraag_id = vraag.vraag_id, optie_id = 1, optie = "Maneuvre", juist = false };
-            var opties2 = new Optie { vraag_id = vraag.vraag_id, optie_id = 2, optie = "Manoeuvre", juist = true };
-            var opties3 = new Optie { vraag_id = vraag.vraag_id, optie_id = 3, optie = "Manoevre", juist = false };
-            var opties4 = new Optie { vraag_id = vraag.vraag_id, optie_id = 4, optie = "Manouvre", juist = false };
+
+            //var dag1 = new DagModel
+            //{
+            //    Id = 1,
+            //    datum = DateTime.Now.Date
+            //};
+            //var vraag1 = new VraagModel
+            //{
+            //    Id = 1,
+            //    Vraag = "De auto maakte een gevaarlijke...",
+            //};
+
+            //var optie1 = new OptieModel{ Id = 1, Optie = "Manoeuvre", VraagId = 1, Juist = true };
+            //var optie2 = new OptieModel { Id = 2, Optie = "Manouvre", VraagId = 1, Juist = false };
+            //var optie3 = new OptieModel { Id = 3, Optie = "Manoevre", VraagId = 1, Juist = false };
+            //var optie4 = new OptieModel { Id = 4, Optie = "Maneuvre", VraagId = 1, Juist = false };
+
 
             _database = new SQLiteAsyncConnection(dbPath);
+            _database.CreateTableAsync<DagModel>().Wait();
+            _database.CreateTableAsync<VraagModel>().Wait();
+            //_database.InsertAsync(vraag1);
+            _database.CreateTableAsync<OptieModel>().Wait();
+            //_database.InsertAsync(optie1);
+            //_database.InsertAsync(optie2);
+            //_database.InsertAsync(optie3);
+            //_database.InsertAsync(optie4);
+        }
+
+        public Task<List<VraagModel>> GetVragenAsync()
+        {
+            return _database.Table<VraagModel>().ToListAsync();
+        }
+
+        public Task<VraagModel> GetVragenAsync(int id)
+        {
+            return _database.Table<VraagModel>()
+                            .Where(i => i.Id == id)
+                            .FirstOrDefaultAsync();
+        }
+
+        public Task<List<OptieModel>> GetOptiesAsync()
+        {
+            return _database.Table<OptieModel>().ToListAsync();
+        }
+
+        public Task<OptieModel> GetOptiesAsync(int id)
+        {
+            return _database.Table<OptieModel>()
+                            .Where(i => i.Id == id)
+                            .FirstOrDefaultAsync();
             _database.CreateTableAsync<Dag>().Wait();
             _database.InsertAsync(dag);
             _database.CreateTableAsync<vragen>().Wait();
@@ -42,13 +85,18 @@ namespace BeterSpellen.Data
             _database.CreateTableAsync<AntwoordModel>().Wait();
         }
 
+        public Task<List<DagModel>> GetDagenAsync()
         public Task<List<VraagModel>> GetVragenAsync()
         {
+            return _database.Table<DagModel>().ToListAsync();
             return _database.Table<VraagModel>().ToListAsync();
         }
 
+        public Task<DagModel> GetDagenAsync(int id)
         public Task<VraagModel> GetVragenAsync(int id)
         {
+            return _database.Table<DagModel>()
+                            .Where(i => i.Id == id)
             return _database.Table<VraagModel>()
                             .Where(i => i.VraagID == id)
                             .FirstOrDefaultAsync();
@@ -63,7 +111,7 @@ namespace BeterSpellen.Data
 
         public Task<int> SaveNoteAsync(VraagModel vraag)
         {
-            if (vraag.VraagID != 0)
+            if (vraag.Id != 0)
             {
                 return _database.UpdateAsync(vraag);
             }
@@ -81,6 +129,10 @@ namespace BeterSpellen.Data
         public Task<int> SaveVraagAsync(VraagModel vraag)
         {
             return _database.InsertAsync(vraag);
+        }
+        public Task<int> SaveOptieAsync(OptieModel optie)
+        {
+            return _database.InsertAsync(optie);
         }
     }
 }
