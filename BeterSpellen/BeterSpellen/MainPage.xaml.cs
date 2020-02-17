@@ -79,15 +79,11 @@ namespace BeterSpellen
 
         public async void SeedDatabase()
         {
-            await App.Database.SaveVraagAsync(new Vraag
+            await App.Database.SaveVraagAsync(new VraagModel
             {
-                DagVraag = "Vraag 1",
-                Antwoord1 = "Antwoord 1",
-                Antwoord2 = "Antwoord 2",
-                Antwoord3 = "Antwoord 3",
-                Antwoord4 = "Antwoord 4",
-                GoedeAntwoord = 3
-            });
+                Vraag = "Vraag 1",
+                
+            }) ;
         }
 
     }

@@ -39,17 +39,17 @@ namespace BeterSpellen.Data
             _database.InsertAsync(opties2);
             _database.InsertAsync(opties3);
             _database.InsertAsync(opties4);
-            _database.CreateTableAsync<Antwoord>().Wait();
+            _database.CreateTableAsync<AntwoordModel>().Wait();
         }
 
-        public Task<List<Vraag>> GetVragenAsync()
+        public Task<List<VraagModel>> GetVragenAsync()
         {
-            return _database.Table<Vraag>().ToListAsync();
+            return _database.Table<VraagModel>().ToListAsync();
         }
 
-        public Task<Vraag> GetVragenAsync(int id)
+        public Task<VraagModel> GetVragenAsync(int id)
         {
-            return _database.Table<Vraag>()
+            return _database.Table<VraagModel>()
                             .Where(i => i.VraagID == id)
                             .FirstOrDefaultAsync();
         }
@@ -61,7 +61,7 @@ namespace BeterSpellen.Data
         }
 
 
-        public Task<int> SaveNoteAsync(Vraag vraag)
+        public Task<int> SaveNoteAsync(VraagModel vraag)
         {
             if (vraag.VraagID != 0)
             {
@@ -73,12 +73,12 @@ namespace BeterSpellen.Data
             }
         }
 
-        public Task<int> DeleteVragenAsync(Vraag vraag)
+        public Task<int> DeleteVragenAsync(VraagModel vraag)
         {
             return _database.DeleteAsync(vraag);
         }
 
-        public Task<int> SaveVraagAsync(Vraag vraag)
+        public Task<int> SaveVraagAsync(VraagModel vraag)
         {
             return _database.InsertAsync(vraag);
         }
